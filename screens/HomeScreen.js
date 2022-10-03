@@ -3,114 +3,79 @@ import {
   Text,
   View,
   Image,
-  FlatList,
   SafeAreaView,
   Alert,
   ActivityIndicator,
   ScrollView,
+  // AsyncStorage,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-// import Geolocation from '@react-native-community/geolocation';
-
+import axios from "axios";
+import * as Location from "expo-location";
 import color from "../contains/color";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import HourlyItem from "./HourlyItem";
 import DailyItem from "./DailyItem";
-
-import imageCloudy from ".././assets/cloudy.png";
-import imageCircle from ".././assets/celsius.png";
 import imageOpacity from ".././assets/opacity.png";
 import imageVector from ".././assets/vector.png";
 import imageWindy from ".././assets/windy.png";
-import imageNight from ".././assets/night.png";
-import imageNightCloudy from ".././assets/night-cloudy.png";
-import imageRainy from ".././assets/rainy.png";
-import imageRainy1 from ".././assets/rainy-1.png";
-import imageStorm from ".././assets/storm.png";
-import imageSun from ".././assets/sun.png";
-import imageSunCloudy from ".././assets/sun-cloudy.png";
-import imageSunset from ".././assets/sunset.png";
-
-const DATA_HOUR = [
-  {
-    id: "0",
-    hour: "10",
-    icon: ".././assets/cloudy.png",
-    temp: "8",
-  },
-  {
-    id: "1",
-    hour: "10",
-    icon: ".././assets/cloudy.png",
-    temp: "8",
-  },
-  {
-    id: "2",
-    hour: "10",
-    icon: ".././assets/cloudy.png",
-    temp: "8",
-  },
-  {
-    id: "3",
-    hour: "10",
-    icon: ".././assets/cloudy.png",
-    temp: "8",
-  },
-  {
-    id: "4",
-    hour: "10",
-    icon: ".././assets/cloudy.png",
-    temp: "8",
-  },
-];
-
-// const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-const API_KEY = "cdcf3a31296891107b71508fb208f5a0";
-// let url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${part}&appid=${API_KEY}`;
-let url = `https://api.openweathermap.org/data/3.0/onecall?&units=metric&exclude=minutely&appid=${API_KEY}`;
 
 function Home() {
-  const [forecast, setForecast] = useState(null);
-  const [refreshing, setRefreshing] = useState(false);
+  const [forecast, setForecast] = useState({});
+  const [location, setLocation] = useState(null);
+  const [address, setAddress] = useState(null);
+
+  const loadLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      setErrorMsg("Permission to access location was denied");
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
+    // let address = await Location.reverseGeocodeAsync(location.coords);
+    // setAddress(address);
+    // console.log(address);
+  };
 
   const loadForecast = async () => {
-    setRefreshing(true);
+    // if(!forecast) {
+    fetchDataFromApi(location.coords.latitude, location.coords.longitude);
+    // console.log(forecast);
+    // }
+  };
 
-    // permission
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert("Permission to access location was denied");
-    }
-
-    // get current location
-    let location = await Location.getCurrentPositionAsync({
-      enableHighAccuracy: true,
-    });
-
-    // fetches the weather data
-    const response = await fetch(
-      // `${url}&lat=${location.coords.latitude}&lon=${location.coords.longitude}`
-      `${url}&lat=21.027669&lon=105.795009`
-      // `https://api.openweathermap.org/data/3.0/onecall?lat=21.0309072&lon=105.7817332&appid=ABC`
-    );
-    const data = await response.json();
-
-    if (!response.ok) {
-      Alert.alert("Error", "Something went wrong");
-    } else {
-      setForecast(data);
-    }
-    setRefreshing(false);
+  const fetchDataFromApi = (latitude, longitude) => {
+    axios
+      .get(
+        "https://api.openweathermap.org/data/3.0/onecall?exclude=minutely&units=metric",
+        {
+          params: {
+            appid: "cdcf3a31296891107b71508fb208f5a0",
+            lat: latitude,
+            lon: longitude,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        setForecast(response.data);
+      })
+      .catch((error) => console.log("Error: ", error));
   };
 
   useEffect(() => {
+    loadLocation();
     loadForecast();
   }, []);
 
   if (!forecast) {
     return (
-      <SafeAreaView style={{flex: 1, alignItems: 'center', justifyContent: "center"}}>
+      <SafeAreaView
+        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+      >
         <ActivityIndicator size="large" />
       </SafeAreaView>
     );
@@ -119,25 +84,25 @@ function Home() {
   const current = forecast.current.weather[0];
 
   return (
-    <SafeAreaView
-      style={styles.container}
-      // refreshControl={
-      //   <RefreshControl
-      //     refreshing={refreshing}
-      //     onRefresh={() => loadForecast()}
-      //   />
-      // }
-    >
+    <SafeAreaView style={styles.container}>
       <View style={styles.top}>
         <View style={styles.top_left}>
-          <Text style={styles.text_city}>Hà Nội</Text>
-          <Text style={styles.text_temp}>10°</Text>
+          <Text style={styles.text_city}></Text>
+          <Text style={styles.text_temp}>{forecast.current.temp.toFixed()}°</Text>
           <View style={styles.cloudyContainer}>
-            <Text style={styles.text_cloudy}>Cloudy</Text>
+            <Text
+              style={styles.text_cloudy}
+              onPress={() => {
+                loadLocation();
+                loadForecast();
+              }}
+            >
+              {current.main}
+            </Text>
           </View>
         </View>
         <View style={styles.top_right}>
-          <Image style={{ width: 133, height: 108 }} source={imageCloudy} />
+          <Image style={{ width: 220, height: 220}} source={{uri: `http://openweathermap.org/img/wn/${current.icon}@4x.png`}} />
         </View>
       </View>
 
@@ -145,15 +110,15 @@ function Home() {
         <View View style={styles.infoContainer}>
           <View style={styles.info}>
             <Image style={styles.imageInfo} source={imageOpacity} />
-            <Text style={styles.textInfo}>13%</Text>
+            <Text style={styles.textInfo}>{forecast.current.humidity}%</Text>
           </View>
           <View style={styles.info}>
             <Image style={styles.imageInfo} source={imageVector} />
-            <Text style={styles.textInfo}>1024 hPa</Text>
+            <Text style={styles.textInfo}>{forecast.current.pressure} hPa</Text>
           </View>
           <View style={styles.info}>
             <Image style={styles.imageInfo} source={imageWindy} />
-            <Text style={styles.textInfo}>9km/h</Text>
+            <Text style={styles.textInfo}>{forecast.current.wind_speed}km/h</Text>
           </View>
         </View>
         <View style={styles.todayContainer}>

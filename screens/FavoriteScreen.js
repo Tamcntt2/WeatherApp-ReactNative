@@ -8,10 +8,8 @@ import {
   SafeAreaView,
 } from "react-native";
 import React from "react";
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// import {SearchBar} from ".././components/SearchBar";
-
-import imageCircle from ".././assets/celsius.png";
 import color from "../contains/color";
 import imageCloudy from ".././assets/cloudy.png";
 import imageOpacity from ".././assets/opacity.png";
@@ -153,7 +151,7 @@ const styles = StyleSheet.create({
   searchBar: {
     backgroundColor: "rgba(240, 239, 239, 1)",
     borderRadius: 10,
-    height: 60,
+    height: 50,
     width: "90%",
     alignItems: "center",
     // justifyContent: "center",
@@ -168,6 +166,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontStyle: "normal",
     lineHeight: 23,
+    flex: 1,
   },
 
   listContainer: {
