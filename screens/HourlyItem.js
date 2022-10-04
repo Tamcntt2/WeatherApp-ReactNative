@@ -6,9 +6,9 @@ import color from "../contains/color";
 function HourlyItem(props) {
   return (
     <View style={styles.hourly}>
-      <Text style={styles.text_hour_1}>{props.hour}</Text>
-      <Image style={{ width: 35, height: 30, marginTop: 7, }} source={{uri: `http://openweathermap.org/img/wn/${props.icon}@4x.png`}} />
-      <Text style={styles.text_hour_2}>{props.temp}°</Text>
+      <Text style={styles.text_hour_1}>10</Text>
+      <Image style={{ width: 40, height: 40, marginTop: 7, flex: 1,}} source={{uri: `http://openweathermap.org/img/wn/02d@4x.png`}} />
+      <Text style={styles.text_hour_2}>10°</Text>
     </View>
   );
 }

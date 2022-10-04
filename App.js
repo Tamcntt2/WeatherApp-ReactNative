@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     // <SafeAreaView>
-      <NavigationContainer>
+      <NavigationContainer >
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, size, color }) => {

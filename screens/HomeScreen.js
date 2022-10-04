@@ -7,13 +7,14 @@ import {
   Alert,
   ActivityIndicator,
   ScrollView,
+  RefreshControl,
   // AsyncStorage,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import * as Location from "expo-location";
 import color from "../contains/color";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import HourlyItem from "./HourlyItem";
 import DailyItem from "./DailyItem";
@@ -23,10 +24,12 @@ import imageWindy from ".././assets/windy.png";
 
 function Home() {
   const [forecast, setForecast] = useState({});
+  const [refreshing, setRefreshing] = useState(false);
   const [location, setLocation] = useState(null);
   const [address, setAddress] = useState(null);
 
   const loadLocation = async () => {
+    // permission
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
       setErrorMsg("Permission to access location was denied");
@@ -41,11 +44,13 @@ function Home() {
   };
 
   const loadForecast = async () => {
-    // if(!forecast) {
+    setRefreshing(true);
+    loadLocation();
     fetchDataFromApi(location.coords.latitude, location.coords.longitude);
-    // console.log(forecast);
-    // }
+    setRefreshing(false);
   };
+
+  const axios = require('axios').default;
 
   const fetchDataFromApi = (latitude, longitude) => {
     axios
@@ -67,7 +72,6 @@ function Home() {
   };
 
   useEffect(() => {
-    loadLocation();
     loadForecast();
   }, []);
 
@@ -81,66 +85,77 @@ function Home() {
     );
   }
 
-  const current = forecast.current.weather[0];
+  // const current = forecast.current.weather[0];
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.top}>
-        <View style={styles.top_left}>
-          <Text style={styles.text_city}></Text>
-          <Text style={styles.text_temp}>{forecast.current.temp.toFixed()}°</Text>
-          <View style={styles.cloudyContainer}>
-            <Text
-              style={styles.text_cloudy}
-              onPress={() => {
-                loadLocation();
-                loadForecast();
-              }}
-            >
-              {current.main}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.top_right}>
-          <Image style={{ width: 220, height: 220}} source={{uri: `http://openweathermap.org/img/wn/${current.icon}@4x.png`}} />
-        </View>
-      </View>
+      {/* <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => loadForecast()}
+          />
+        }
 
-      <View style={styles.center}>
-        <View View style={styles.infoContainer}>
-          <View style={styles.info}>
-            <Image style={styles.imageInfo} source={imageOpacity} />
-            <Text style={styles.textInfo}>{forecast.current.humidity}%</Text>
+        style={{flex:1}}
+      > */}
+        <View style={styles.top}>
+          <View style={styles.top_left}>
+            <Text style={styles.text_city}></Text>
+            {/* <Text style={styles.text_temp}>{forecast.current.temp.toFixed()}°</Text> */}
+            <View style={styles.cloudyContainer}>
+              <Text
+                style={styles.text_cloudy}
+                onPress={() => {
+                  loadLocation();
+                  loadForecast();
+                }}
+              >
+                {/* {current.main} */}
+              </Text>
+            </View>
           </View>
-          <View style={styles.info}>
-            <Image style={styles.imageInfo} source={imageVector} />
-            <Text style={styles.textInfo}>{forecast.current.pressure} hPa</Text>
+          <View style={styles.top_right}>
+            {/* <Image style={{ width: 220, height: 220}} source={{uri: `http://openweathermap.org/img/wn/${current.icon}@4x.png`}} /> */}
           </View>
-          <View style={styles.info}>
-            <Image style={styles.imageInfo} source={imageWindy} />
-            <Text style={styles.textInfo}>{forecast.current.wind_speed}km/h</Text>
-          </View>
-        </View>
-        <View style={styles.todayContainer}>
-          <Text style={styles.text_today}>Today</Text>
         </View>
 
-        <View style={styles.hourlyContainer}>
-          <HourlyItem />
-          <HourlyItem />
-          <HourlyItem />
-          <HourlyItem />
-          <HourlyItem />
-        </View>
-      </View>
+        <View style={styles.center}>
+          <View View style={styles.infoContainer}>
+            <View style={styles.info}>
+              <Image style={styles.imageInfo} source={imageOpacity} />
+              {/* <Text style={styles.textInfo}>{forecast.current.humidity}%</Text> */}
+            </View>
+            <View style={styles.info}>
+              <Image style={styles.imageInfo} source={imageVector} />
+              {/* <Text style={styles.textInfo}>{forecast.current.pressure} hPa</Text> */}
+            </View>
+            <View style={styles.info}>
+              <Image style={styles.imageInfo} source={imageWindy} />
+              {/* <Text style={styles.textInfo}>{forecast.current.wind_speed}km/h</Text> */}
+            </View>
+          </View>
+          <View style={styles.todayContainer}>
+            <Text style={styles.text_today}>Today</Text>
+          </View>
 
-      <View style={styles.dailyContainer}>
-        <DailyItem />
-        <DailyItem />
-        <DailyItem />
-        <DailyItem />
-        <DailyItem />
-      </View>
+          <View style={styles.hourlyContainer}>
+            <HourlyItem />
+            <HourlyItem />
+            <HourlyItem />
+            <HourlyItem />
+            <HourlyItem />
+          </View>
+        </View>
+
+        <View style={styles.dailyContainer}>
+          <DailyItem />
+          <DailyItem />
+          <DailyItem />
+          <DailyItem />
+          <DailyItem />
+        </View>
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 }
