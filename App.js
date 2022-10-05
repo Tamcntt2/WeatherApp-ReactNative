@@ -1,13 +1,13 @@
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, AsyncStorage } from "react-native";
 import React from "react";
 import Ionic from "react-native-vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import HomeScreen from "./screens/HomeScreen";
-import FavoriteScreen from "./screens/FavoriteScreen";
-import MenuScreen from "./screens/MenuScreen";
-import MapScreen from "./screens/MapScreen";
+import HomeScreen from "./src/screens/HomeScreen";
+import FavoriteScreen from "./src/screens/FavoriteScreen";
+import MenuScreen from "./src/screens/MenuScreen";
+import MapScreen from "./src/screens/MapScreen";
 
 const Tab = createBottomTabNavigator();
 

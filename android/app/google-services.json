@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "445657868433",
+    "project_id": "notification-weather-app-vt-22",
+    "storage_bucket": "notification-weather-app-vt-22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445657868433:android:1da5e2c4292c0e427df730",
+        "android_client_info": {
+          "package_name": "com.anonymous.weatherApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445657868433-fr01jljupfi4u4sroe3tk43o71snflh3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY6q4wopc8EEHkXrL0R9tRLbi8tKSYZVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445657868433-fr01jljupfi4u4sroe3tk43o71snflh3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
