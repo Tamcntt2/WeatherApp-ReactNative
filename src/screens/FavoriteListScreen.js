@@ -10,12 +10,11 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
+import SearchDropDown from "../components/SearchDropDown";
 
 import color from "../contains/color";
-import imageCloudy from "../.././assets/cloudy.png";
 import imageOpacity from "../.././assets/opacity.png";
 import imageWindy from "../.././assets/windy.png";
-import imageSearch from "../.././assets/search.png";
 
 import values from "../contains/values";
 
@@ -80,7 +79,6 @@ const ItemFavorite = ({
               width: 55,
               height: 10,
               flex: 1,
-              // tintColor: color.tintColorIconWeather,
             }}
             source={{
               uri: `http://openweathermap.org/img/wn/${icon}@4x.png`,
@@ -95,7 +93,6 @@ const ItemFavorite = ({
           flexDirection: "row",
           justifyContent: "space-around",
           alignItems: "center",
-          // paddingHorizontal: 10
         }}
       >
         <View style={styles.info}>
@@ -114,7 +111,7 @@ const ItemFavorite = ({
 const axios = require("axios").default;
 
 function Favorite({ navigation }) {
-  function renderItemHour({ item }) {
+  function renderItemFavorite({ item }) {
     const location_item = {
       coords: { latitude: item.latitude, longitude: item.longitude },
     };
@@ -172,45 +169,73 @@ function Favorite({ navigation }) {
   // }
 
   // const navigation = useNavigation();
+
+  const [locationSearch, setLocationSearch] = useState(null); // array object location
+  const [searching, setSearching] = useState(false);
   useEffect(() => {
     // load Favorite
     // ...
-    // navigation
     setFilteredData(DATA_FAVORITE);
 
+    // navigation: search bar header
     navigation.setOptions({
       headerSearchBarOptions: {
-        placeholder: "Search",
+        placeholder: "Tìm kiếm",
         onChangeText: (event) => {
-          searchFilterFunction(event.nativeEvent.text);
+          const text = event.nativeEvent.text.trim();
+          if (text) {
+            setSearching(true);
+            searchFilterFunction(text);
+          } else {
+            setSearching(false);
+          }
         },
       },
     });
   }, [navigation]);
 
-  const searchFilterFunction = (text) => {
-    if (text) {
-      const newData = DATA_FAVORITE.filter((item) => {
-        const itemData = item.address
-          ? item.address.toUpperCase()
-          : "".toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      });
-      setFilteredData(newData);
-    } else {
-      setFilteredData(DATA_FAVORITE);
-    }
+  const searchFilterFunction = async (text) => {
+
+    // nominatim openstreetmap: get location from address
+    axios
+      .get("https://nominatim.openstreetmap.org/search?format=json", {
+        params: {
+          country: "VN",
+          city: text,
+        },
+      })
+      .then(async (response) => {
+        if (response.data) {
+          await setLocationSearch(response.data);
+          console.log("Address search::: ", response.data);
+        } else {
+        }
+      })
+      .catch((error) => console.log("Error::: ", error));
   };
+
+  if (!DATA_FAVORITE.length) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text>Vui lòng thêm thành phố yêu thích!</Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        numColumns={2}
-        data={filteredData}
-        renderItem={renderItemHour}
-        keyExtractor={(item) => item.id}
-      />
+      {!searching && (
+        <FlatList
+          numColumns={2}
+          data={filteredData}
+          renderItem={renderItemFavorite}
+          keyExtractor={(item) => item.id}
+        />
+      )}
+
+      {searching && locationSearch && (
+        <SearchDropDown navigation={navigation} locationSearch={locationSearch} />
+      )}
     </SafeAreaView>
   );
 }

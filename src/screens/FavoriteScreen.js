@@ -8,7 +8,7 @@ import FavoriteListScreen from "./FavoriteListScreen";
 
 const Stack = createNativeStackNavigator();
 
-const Favorite = () => {
+const FavoriteScreen = () => {
   return (
     <>
       <Stack.Navigator>
@@ -30,7 +30,7 @@ const Favorite = () => {
             headerRight: () => (
               <View>
                 <TouchableOpacity>
-                  <Ionic name="star-outline" size={25} color="red" />
+                  <Ionic name="heart-outline" size={25} color="red" />
                 </TouchableOpacity>
               </View>
             ),
@@ -41,4 +41,4 @@ const Favorite = () => {
   );
 };
 
-export default Favorite;
+export default FavoriteScreen;
