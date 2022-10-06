@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import color from "../contains/color";
@@ -17,51 +17,43 @@ import imageOpacity from "../.././assets/opacity.png";
 import imageWindy from "../.././assets/windy.png";
 import imageSearch from "../.././assets/search.png";
 
+import values from "../contains/values";
+
 const DATA_FAVORITE = [
   {
     id: "0",
-    location: "Hà Nội",
-    icon: ".././assets/cloudy.png",
-    temp: "18",
-    humidity: "13",
-    wind_speed: "9",
+    latitude: 21.028511,
+    longitude: 105.804817,
+    address: "Hà Nội",
+    icon: "10d",
+    temp: 25.01,
+    humidity: 88,
+    wind_speed: 1.65,
   },
   {
     id: "1",
-    location: "Hà Nội",
-    icon: ".././assets/cloudy.png",
-    temp: "18",
-    humidity: "13",
-    wind_speed: "9",
+    latitude: 35.652832,
+    longitude: 139.839478,
+    address: "Tokyo",
+    icon: "10d",
+    temp: 25.01,
+    humidity: 88,
+    wind_speed: 1.65,
   },
   {
     id: "2",
-    location: "Hà Nội",
-    icon: ".././assets/cloudy.png",
-    temp: "18",
-    humidity: "13",
-    wind_speed: "9",
-  },
-  {
-    id: "3",
-    location: "Hà Nội",
-    icon: ".././assets/cloudy.png",
-    temp: "18",
-    humidity: "13",
-    wind_speed: "9",
-  },
-  {
-    id: "4",
-    location: "Hà Nội",
-    icon: ".././assets/cloudy.png",
-    temp: "18",
-    humidity: "13",
-    wind_speed: "9",
+    latitude: 40.73061,
+    longitude: -73.935242,
+    address: "New York",
+    icon: "10d",
+    temp: 25.01,
+    humidity: 88,
+    wind_speed: 1.65,
   },
 ];
 
 const ItemFavorite = ({
-  location,
+  address,
   icon,
   temp,
   humidity,
@@ -80,10 +72,20 @@ const ItemFavorite = ({
       >
         <View style={styles.itemFavoriteLeft}>
           <Text style={styles.text_temp}>{temp}°</Text>
-          <Text style={styles.text_city}>{location}</Text>
+          <Text style={styles.text_city}>{address}</Text>
         </View>
         <View style={styles.itemFavoriteRight}>
-          <Image style={{ width: 47, height: 40 }} source={imageCloudy} />
+          <Image
+            style={{
+              width: 55,
+              height: 10,
+              flex: 1,
+              // tintColor: color.tintColorIconWeather,
+            }}
+            source={{
+              uri: `http://openweathermap.org/img/wn/${icon}@4x.png`,
+            }}
+          />
         </View>
       </View>
 
@@ -109,51 +111,106 @@ const ItemFavorite = ({
   </TouchableOpacity>
 );
 
+const axios = require("axios").default;
+
 function Favorite({ navigation }) {
   function renderItemHour({ item }) {
-    const pressHandler = () => {
-      navigation.navigate("FavoriteOverview");
+    const location_item = {
+      coords: { latitude: item.latitude, longitude: item.longitude },
+    };
+    const pressHandler = ({}) => {
+      navigation.navigate("FavoriteOverview", {
+        latitude: item.latitude,
+        longitude: item.longitude,
+      });
     };
 
     return (
       <ItemFavorite
-        location={item.location}
+        address={item.address}
         icon={item.icon}
-        temp={item.temp}
+        temp={item.temp.toFixed()}
         humidity={item.humidity}
         wind_speed={item.wind_speed}
+        // address={address[0].region}
+        // icon={forecast.current.weather[0].icon}
+        // temp={forecast.current.temp}
+        // humidity={forecast.current.humidity}
+        // wind_speed={forecast.current.wind_speed}
         onPress={pressHandler}
       />
     );
   }
 
+  const [filteredData, setFilteredData] = useState(null);
+
+  // const [forecast, setForecast] = useState(null);
+  // const [address, setAddress] = useState(null);
+
+  // async function getAddress() {
+  //   axios
+  //     .get(
+  //       "https://api.openweathermap.org/data/3.0/onecall?exclude=minutely&units=metric",
+  //       {
+  //         params: {
+  //           appid: values.key_API,
+  //           lat: item.latitude,
+  //           lon: item.longitude,
+  //         },
+  //       }
+  //     )
+  //     .then((response) => {
+  //       setForecast(response.data);
+  //     })
+  //     .catch((error) => console.log("Error::: ", error));
+  //   let location = {
+  //     latitude: item.latitude,
+  //     longitude: item.longitude,
+  //   };
+  //   let address = await Location.reverseGeocodeAsync(location);
+  //   setAddress(address);
+  // }
+
+  // const navigation = useNavigation();
+  useEffect(() => {
+    // load Favorite
+    // ...
+    // navigation
+    setFilteredData(DATA_FAVORITE);
+
+    navigation.setOptions({
+      headerSearchBarOptions: {
+        placeholder: "Search",
+        onChangeText: (event) => {
+          searchFilterFunction(event.nativeEvent.text);
+        },
+      },
+    });
+  }, [navigation]);
+
+  const searchFilterFunction = (text) => {
+    if (text) {
+      const newData = DATA_FAVORITE.filter((item) => {
+        const itemData = item.address
+          ? item.address.toUpperCase()
+          : "".toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredData(newData);
+    } else {
+      setFilteredData(DATA_FAVORITE);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.searchBar}>
-        <Image
-          style={{
-            width: 30,
-            height: 30,
-            marginLeft: 12,
-            tintColor: "rgba(164, 164, 164, 1)",
-          }}
-          source={imageSearch}
-        />
-        <TextInput
-          style={styles.textSearchBar}
-          placeholder="Tìm kiếm"
-          type="text"
-        />
-      </View>
-
-      <View style={styles.listContainer}>
-        <FlatList
-          numColumns={2}
-          data={DATA_FAVORITE}
-          renderItem={renderItemHour}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
+      <FlatList
+        numColumns={2}
+        data={filteredData}
+        renderItem={renderItemHour}
+        keyExtractor={(item) => item.id}
+      />
     </SafeAreaView>
   );
 }
@@ -165,32 +222,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
     paddingTop: 50,
-  },
-  searchBar: {
-    backgroundColor: "rgba(240, 239, 239, 1)",
-    borderRadius: 10,
-    height: 50,
-    width: "90%",
-    alignItems: "center",
-    // justifyContent: "center",
-    marginTop: 50,
-    flexDirection: "row",
-  },
-  textSearchBar: {
-    marginLeft: 20,
-    color: "rgba(164, 164, 164, 1)",
-    // fontFamily: 'Roboto Condensed',
-    // fontWeight: 700,
-    fontSize: 20,
-    fontStyle: "normal",
-    lineHeight: 23,
-    flex: 1,
-  },
-
-  listContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 30,
   },
   itemFavorite: {
     borderRadius: 20,
@@ -249,8 +280,8 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
   imageInfo: {
-    width: 17,
-    height: 15,
+    width: 15,
+    height: 12,
     tintColor: color.textColor,
   },
 });

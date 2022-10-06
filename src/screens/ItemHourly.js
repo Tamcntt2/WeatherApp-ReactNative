@@ -3,28 +3,27 @@ import React from "react";
 
 import color from "../contains/color";
 
-function HourlyItem(props) {
+function ItemHourly(props) {
   return (
     <View style={styles.hourly}>
-      <Text style={styles.text_hour_1}>{props.hour}</Text>
+      <Text style={styles.textHour1}>{props.hour}</Text>
       <Image
         style={{
           width: 40,
           height: 40,
           marginTop: 7,
           flex: 1,
-          tintColor: color.tintColorIconWeather,
         }}
         source={{
           uri: `http://openweathermap.org/img/wn/${props.icon}@4x.png`,
         }}
       />
-      <Text style={styles.text_hour_2}>{props.temp}°</Text>
+      <Text style={styles.textHour2}>{props.temp}°</Text>
     </View>
   );
 }
 
-export default HourlyItem;
+export default ItemHourly;
 
 const styles = StyleSheet.create({
   hourly: {
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
   },
-  text_hour_1: {
+  textHour1: {
     color: color.textColor,
     // fontFamily: 'Roboto Condensed',
     // fontWeight: 700,
@@ -41,7 +40,7 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     lineHeight: 21,
   },
-  text_hour_2: {
+  textHour2: {
     color: color.textColor,
     // fontFamily: 'Roboto Condensed',
     // fontWeight: 700,

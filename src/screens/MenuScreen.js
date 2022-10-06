@@ -4,7 +4,6 @@ import React from "react";
 const Menu = () => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      {/* <ActivityIndicator size="large" /> */}
       <Text>Đang cập nhật!</Text>
     </View>
   );

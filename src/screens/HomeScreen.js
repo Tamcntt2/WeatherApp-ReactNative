@@ -3,7 +3,6 @@ import * as Location from "expo-location";
 import {
   SafeAreaView,
   ActivityIndicator,
-  // AsyncStorage,
 } from "react-native";
 import ForecastComponent from "../components/ForecastComponent";
 
@@ -20,10 +19,10 @@ function Home() {
 
     let location = await Location.getCurrentPositionAsync({});
     setLocation(location);
+    console.log("lo:::", location);
   };
 
   useEffect(() => {
-    // loadForecast();
     loadCurrentLocation();
   }, []);
 
@@ -37,7 +36,7 @@ function Home() {
     );
   }
 
-  return <ForecastComponent location={location} />;
+  return <ForecastComponent location={location}/>;
 }
 
 export default Home;

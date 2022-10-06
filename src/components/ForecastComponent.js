@@ -23,6 +23,8 @@ import imageOpacity from "../.././assets/opacity.png";
 import imageVector from "../.././assets/vector.png";
 import imageWindy from "../.././assets/windy.png";
 
+import values from "../contains/values";
+
 function ForecastComponent(props) {
   const [forecast, setForecast] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -41,10 +43,10 @@ function ForecastComponent(props) {
 
     let location = props.location;
     setLocation(location);
-    console.log("location:::", location);
+    console.log("Location :::", location);
     let address = await Location.reverseGeocodeAsync(location.coords);
     setAddress(address);
-    console.log("Address::: ", address);
+    console.log("Address ::: ", address);
 
     fetchDataFromApi(location.coords.latitude, location.coords.longitude);
 
@@ -60,7 +62,7 @@ function ForecastComponent(props) {
         "https://api.openweathermap.org/data/3.0/onecall?exclude=minutely&units=metric",
         {
           params: {
-            appid: "1b5dcb72d707f1eca07003b425497af6",
+            appid: values.key_API,
             lat: latitude,
             lon: longitude,
           },
@@ -104,30 +106,22 @@ function ForecastComponent(props) {
         contentContainerStyle={{ flexGrow: 1 }}
       >
         <View style={styles.top}>
-          <View style={styles.top_left}>
-            <Text style={styles.text_city}>{address[0].region}</Text>
-            <Text style={styles.text_temp}>
+          <View style={styles.topLeft}>
+            <Text style={styles.textCity}>{address[0].region}</Text>
+            <Text style={styles.textTemp}>
               {forecast.current.temp.toFixed()}°
             </Text>
             <View style={styles.cloudyContainer}>
-              <Text
-                style={styles.text_cloudy}
-                onPress={() => {
-                  loadLocation();
-                  loadForecast();
-                }}
-              >
-                {current.main}
-              </Text>
+              <Text style={styles.textCloudy}>{current.main}</Text>
             </View>
           </View>
-          <View style={styles.top_right}>
+          <View style={styles.topRigth}>
             <Image
               style={{
                 width: 200,
                 height: 150,
                 flex: 1,
-                tintColor: color.tintColorIconWeather,
+                // tintColor: color.tintColorIconWeather,
               }}
               source={{
                 uri: `http://openweathermap.org/img/wn/${current.icon}@4x.png`,
@@ -145,7 +139,7 @@ function ForecastComponent(props) {
             <View style={styles.info}>
               <Image style={styles.imageInfo} source={imageVector} />
               <Text style={styles.textInfo}>
-                {forecast.current.pressure} hPa
+                {forecast.current.pressure}hPa
               </Text>
             </View>
             <View style={styles.info}>
@@ -156,7 +150,7 @@ function ForecastComponent(props) {
             </View>
           </View>
           <View style={styles.todayContainer}>
-            <Text style={styles.text_today}>Today</Text>
+            <Text style={styles.textToday}>Today</Text>
           </View>
 
           <ScrollView
@@ -209,17 +203,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  top_left: {
+  topLeft: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
-  top_right: {
+  topRigth: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
-  text_city: {
+  textCity: {
     color: color.textColor,
     // fontFamily: 'Roboto Condensed',
     // fontWeight: 700,
@@ -232,7 +226,7 @@ const styles = StyleSheet.create({
     height: 82,
     marginTop: 8,
   },
-  text_temp: {
+  textTemp: {
     color: color.textColor,
     // fontFamily: 'Roboto Condensed',
     // fontWeight: 700,
@@ -245,7 +239,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0EFEF",
     borderRadius: 20,
   },
-  text_cloudy: {
+  textCloudy: {
     color: color.textColor,
     // fontFamily: 'Roboto Condensed',
     fontSize: 17,
@@ -262,7 +256,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 10,
   },
-  text_today: {
+  textToday: {
     color: "#BDCBD7",
     // fontFamily: 'Roboto Condensed',
     // fontWeight: 500,
@@ -298,7 +292,7 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // justifyContent: "center",
   },
-  text_hour_1: {
+  textHour1: {
     flex: 1,
     color: color.textColor,
     // fontFamily: 'Roboto Condensed',
@@ -307,7 +301,7 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     lineHeight: 21,
   },
-  text_hour_2: {
+  textHour2: {
     color: color.textColor,
     // fontFamily: 'Roboto Condensed',
     // fontWeight: 700,

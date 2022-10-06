@@ -1,19 +1,17 @@
-import {View, Text, StyleSheet} from 'react-native';
-import HomeScreen from './HomeScreen';
-import Ionic from "react-native-vector-icons/Ionicons";
+import ForecastComponent from "../components/ForecastComponent";
 
-function FavoriteOverviewScreen(props) {
-    return (
-        <>
-            <HomeScreen/>
-        </>
-    );
+function FavoriteOverviewScreen({ route }) {
+  const location = {
+    coords: {
+      latitude: route.params.latitude,
+      longitude: route.params.longitude,
+    },
+  };
+  return (
+    <>
+      <ForecastComponent location={location} />
+    </>
+  );
 }
 
 export default FavoriteOverviewScreen;
-
-const styles = StyleSheet.create({
-    container: {
-
-    },
-});

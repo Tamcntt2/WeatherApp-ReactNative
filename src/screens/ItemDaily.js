@@ -3,19 +3,16 @@ import React from "react";
 
 import color from "../contains/color";
 
-import imageRainy from "../.././assets/rainy.png";
-
-function DailyItem(props) {
+function ItemDaily(props) {
   return (
     <View style={styles.daily}>
-      <Text style={styles.text_hour_1}>{props.day}</Text>
+      <Text style={styles.textHour1}>{props.day}</Text>
       <View style={{ flex: 1 }}>
         <Image
           style={{
             width: 40,
             height: 40,
             flex: 1,
-            tintColor: color.tintColorIconWeather,
           }}
           source={{
             uri: `http://openweathermap.org/img/wn/${props.icon}@4x.png`,
@@ -23,14 +20,14 @@ function DailyItem(props) {
         />
       </View>
       <View style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}>
-        <Text style={styles.text_hour_2}>{props.temp}°</Text>
+        <Text style={styles.textHour2}>{props.temp}°</Text>
         <Text style={styles.textDaily2}>{props.feels_like}°</Text>
       </View>
     </View>
   );
 }
 
-export default DailyItem;
+export default ItemDaily;
 
 const styles = StyleSheet.create({
   hourly: {
@@ -39,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  text_hour_1: {
+  textHour1: {
     flex: 1,
     color: color.textColor,
     // fontFamily: 'Roboto Condensed',
@@ -48,7 +45,7 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     lineHeight: 21,
   },
-  text_hour_2: {
+  textHour2: {
     color: color.textColor,
     // fontFamily: 'Roboto Condensed',
     // fontWeight: 700,

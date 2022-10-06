@@ -1,8 +1,5 @@
-import {
-  View,
-  TouchableOpacity,
-} from "react-native";
-import React, { useEffect, useState }  from "react";
+import { View, TouchableOpacity } from "react-native";
+import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionic from "react-native-vector-icons/Ionicons";
 
@@ -12,13 +9,15 @@ import FavoriteListScreen from "./FavoriteListScreen";
 const Stack = createNativeStackNavigator();
 
 const Favorite = () => {
-
   return (
     <>
-      {/* <NavigationContainer> */}
       <Stack.Navigator>
         <Stack.Screen
-          options={{ headerShown: false }}
+          options={{
+            headerTitle: false,
+            headerBackVisible: true,
+            headerLargeTitle: false,
+          }}
           name="FavoriteList"
           component={FavoriteListScreen}
         />
@@ -31,14 +30,13 @@ const Favorite = () => {
             headerRight: () => (
               <View>
                 <TouchableOpacity>
-                  <Ionic name="star-outline" size={25} color="red"/>
+                  <Ionic name="star-outline" size={25} color="red" />
                 </TouchableOpacity>
               </View>
             ),
           }}
         />
       </Stack.Navigator>
-      {/* </NavigationContainer> */}
     </>
   );
 };
