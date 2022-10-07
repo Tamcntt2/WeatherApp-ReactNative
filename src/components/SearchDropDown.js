@@ -11,28 +11,31 @@ const SearchDropDown = (props) => {
   return (
     <View
       style={{
-        flex: 1,
         // backgroundColor: "#d7e3e5",
-        justifyContent: "center",
-        alignItems: "center",
+        width: "100%",
+        height: 320,
+        marginTop: 3,
+        alignItems: "center", justifyContent: "center"
       }}
     >
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        {props.locationSearch.map((item) => {
-          return (
-            <TouchableOpacity
-            //   onPress={(item) => {
-            //     console.log("Drop:::", item);
-            //     props.navigation.navigate("FavoriteOverview", {
-            //       latitude: item.lat,
-            //       longitude: item.lon,
-            //     });
-            //   }}
-            >
-              <Text style={styles.itemDropdown}>{item.display_name}</Text>
-            </TouchableOpacity>
-          );
-        })}
+      <ScrollView contentContainerStyle={{ flexGrow: 1, marginHorizontal: 10 }}>
+        <View style={{ flex: 1 }}>
+          {props.locationSearch.map((itemD) => {
+            return (
+              <TouchableOpacity
+                onPress={(item) => {
+                  console.log("Drop:::", itemD);
+                  props.navigation.navigate("FavoriteOverview", {
+                    latitude: itemD.lat,
+                    longitude: itemD.lon,
+                  });
+                }}
+              >
+                <Text style={styles.itemDropdown}>{itemD.display_name}</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
       </ScrollView>
     </View>
   );
@@ -40,13 +43,11 @@ const SearchDropDown = (props) => {
 
 const styles = StyleSheet.create({
   itemDropdown: {
-    borderRadius: 10,
+    borderColor: "gray",
     borderWidth: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    justifyContent: "center",
-    marginHorizontal: 10,
-    marginTop: 10,
+    paddingHorizontal: 15,
+    paddingBottom: 5,
+    paddingTop: 20,
     fontSize: 15,
   },
 });

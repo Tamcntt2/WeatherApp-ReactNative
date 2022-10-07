@@ -2,6 +2,7 @@ import { StyleSheet, SafeAreaView, AsyncStorage } from "react-native";
 import React from "react";
 import Ionic from "react-native-vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import HomeScreen from "./src/screens/HomeScreen";
@@ -12,6 +13,7 @@ import MapScreen from "./src/screens/MapScreen";
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+
   return (
     // <SafeAreaView>
       <NavigationContainer >

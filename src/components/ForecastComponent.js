@@ -50,13 +50,12 @@ function ForecastComponent(props) {
 
     fetchDataFromApi(location.coords.latitude, location.coords.longitude);
 
-    // console.log("Location::: ", location);
     setRefreshing(false);
   };
 
   const axios = require("axios").default;
 
-  const fetchDataFromApi = (latitude, longitude) => {
+  const fetchDataFromApi = async (latitude, longitude) => {
     axios
       .get(
         "https://api.openweathermap.org/data/3.0/onecall?exclude=minutely&units=metric",
@@ -69,7 +68,7 @@ function ForecastComponent(props) {
         }
       )
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setForecast(response.data);
       })
       .catch((error) => console.log("Error::: ", error));
@@ -80,6 +79,7 @@ function ForecastComponent(props) {
   }, []);
 
   if (!forecast) {
+    console.log("forecast error!");
     return (
       <SafeAreaView
         style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
@@ -107,7 +107,7 @@ function ForecastComponent(props) {
       >
         <View style={styles.top}>
           <View style={styles.topLeft}>
-            <Text style={styles.textCity}>{address[0].region}</Text>
+            <Text style={styles.textCity}>{address[0].region.replace('Thành Phố', '')}</Text>
             <Text style={styles.textTemp}>
               {forecast.current.temp.toFixed()}°
             </Text>
@@ -115,12 +115,13 @@ function ForecastComponent(props) {
               <Text style={styles.textCloudy}>{current.main}</Text>
             </View>
           </View>
-          <View style={styles.topRigth}>
+          <View style={styles.topRight}>
             <Image
               style={{
                 width: 200,
                 height: 150,
                 flex: 1,
+                marginRight: 20,
                 // tintColor: color.tintColorIconWeather,
               }}
               source={{
@@ -208,7 +209,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  topRigth: {
+  topRight: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
@@ -233,11 +234,13 @@ const styles = StyleSheet.create({
     fontSize: 70,
     fontStyle: "normal",
     lineHeight: 82,
+    marginLeft: 15,
   },
   cloudyContainer: {
     marginTop: 15,
     backgroundColor: "#F0EFEF",
     borderRadius: 20,
+    marginRight: 10,
   },
   textCloudy: {
     color: color.textColor,

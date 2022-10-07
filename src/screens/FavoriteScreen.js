@@ -5,19 +5,17 @@ import Ionic from "react-native-vector-icons/Ionicons";
 
 import FavoriteOverviewScreen from "./FavoriteOverviewScreen";
 import FavoriteListScreen from "./FavoriteListScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 
 const FavoriteScreen = () => {
+
   return (
     <>
       <Stack.Navigator>
         <Stack.Screen
-          options={{
-            headerTitle: false,
-            headerBackVisible: true,
-            headerLargeTitle: false,
-          }}
+          options={{ headerShown: false }}
           name="FavoriteList"
           component={FavoriteListScreen}
         />
@@ -30,7 +28,7 @@ const FavoriteScreen = () => {
             headerRight: () => (
               <View>
                 <TouchableOpacity>
-                  <Ionic name="heart-outline" size={25} color="red" />
+                  <Ionic name="heart" size={25} color="red" />
                 </TouchableOpacity>
               </View>
             ),
