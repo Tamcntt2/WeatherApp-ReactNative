@@ -248,6 +248,7 @@ function Favorite({ navigation }) {
         params: {
           country: "VN",
           city: text,
+          addressdetail: 1
         },
       })
       .then(async (response) => {

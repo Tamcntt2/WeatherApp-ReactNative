@@ -43,19 +43,34 @@ function ForecastComponent(props) {
 
     let location = props.location;
     setLocation(location);
-    console.log("Location :::", location);
-    let address = await Location.reverseGeocodeAsync(location.coords);
-    setAddress(address);
-    console.log("Address ::: ", address);
+    console.log("FC: Location coordinate", location);
+    // let address = "HN";
+    // setAddress(address);
+    // console.log("FC: Address ::: ", address);
+    reverseGeocode(location.coords.latitude, location.coords.longitude)
+    
 
     fetchDataFromApi(location.coords.latitude, location.coords.longitude);
-
+    
     setRefreshing(false);
   };
 
   const axios = require("axios").default;
 
+  const reverseGeocode = (lat, lng) => {
+    console.log('Call reverseGeocode');
+    axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+    .then((response) => {
+      const data = response.data;
+      const address= data.address;
+      const city = address.city.replace('Thành phố', '');
+    
+      console.log("FC: Address ::: ", data , address, city);
+      setAddress(city);
+    })
+  }
   const fetchDataFromApi = async (latitude, longitude) => {
+    console.log("FC: fetchdata from openweather")
     axios
       .get(
         "https://api.openweathermap.org/data/3.0/onecall?exclude=minutely&units=metric",
@@ -69,9 +84,10 @@ function ForecastComponent(props) {
       )
       .then((response) => {
         // console.log(response.data);
+        console.log("FC: Response: ", response);
         setForecast(response.data);
       })
-      .catch((error) => console.log("Error::: ", error));
+      .catch((error) => console.log("FC: Error: ", error));
   };
 
   useEffect(() => {
@@ -107,7 +123,7 @@ function ForecastComponent(props) {
       >
         <View style={styles.top}>
           <View style={styles.topLeft}>
-            <Text style={styles.textCity}>{address[0].region.replace('Thành Phố', '')}</Text>
+            <Text style={styles.textCity}>{address}</Text>
             <Text style={styles.textTemp}>
               {forecast.current.temp.toFixed()}°
             </Text>

@@ -35,7 +35,7 @@ function FavoriteOverviewScreen({ route }) {
   const location = {
     coords: {
       latitude: route.params.latitude,
-      longitude: route.params.longitude,
+      longitude: route.params.longitude
     },
   };
   

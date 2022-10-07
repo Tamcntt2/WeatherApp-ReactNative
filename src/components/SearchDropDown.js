@@ -25,9 +25,12 @@ const SearchDropDown = (props) => {
               <TouchableOpacity
                 onPress={(item) => {
                   console.log("Drop:::", itemD);
+                  const lat = itemD.lat;
+                  const lon = itemD.lon;
+                  const address = itemD.address;
                   props.navigation.navigate("FavoriteOverview", {
-                    latitude: itemD.lat,
-                    longitude: itemD.lon,
+                    latitude: lat,
+                    longitude: lon,
                   });
                 }}
               >
