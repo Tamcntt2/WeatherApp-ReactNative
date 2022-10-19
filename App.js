@@ -1,18 +1,36 @@
 import { StyleSheet, SafeAreaView, AsyncStorage } from "react-native";
-import React from "react";
+// import auth from '@react-native-firebase/auth';
+// import firestore from '@react-native-firebase/firestore';
+import messaging from '@react-native-firebase/messaging';
 import Ionic from "react-native-vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
+// import {requestUserPermission} from "./src/untils/pushNotification";
 import HomeScreen from "./src/screens/HomeScreen";
 import FavoriteScreen from "./src/screens/FavoriteScreen";
 import MenuScreen from "./src/screens/MenuScreen";
 import MapScreen from "./src/screens/MapScreen";
+import React, { useEffect, useState } from "react";
+
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+
+  useEffect(() => {
+    getFCMToken();
+    // requestUserPermission();
+    // NotificationListner();
+  })
+
+  const getFCMToken = () => {
+    messaging()
+      .getToken()
+      .then(token => {
+        return saveTokenToDatabase(token);
+      });
+  }
 
   return (
     // <SafeAreaView>

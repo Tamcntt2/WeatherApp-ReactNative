@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "445657868433",
-    "project_id": "notification-weather-app-vt-22",
-    "storage_bucket": "notification-weather-app-vt-22.appspot.com"
+    "project_number": "326672687124",
+    "project_id": "notification-weather-app-a8eab",
+    "storage_bucket": "notification-weather-app-a8eab.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:445657868433:android:1da5e2c4292c0e427df730",
+        "mobilesdk_app_id": "1:326672687124:android:c620917147c01449e84701",
         "android_client_info": {
           "package_name": "com.anonymous.weatherApp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "445657868433-fr01jljupfi4u4sroe3tk43o71snflh3.apps.googleusercontent.com",
+          "client_id": "326672687124-cg23k50v1hj2bm7qqfgt35ft7kas8dqc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAY6q4wopc8EEHkXrL0R9tRLbi8tKSYZVE"
+          "current_key": "AIzaSyDaqTkbhHkBP66edLVD_KinF0lpCJyoL3I"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "445657868433-fr01jljupfi4u4sroe3tk43o71snflh3.apps.googleusercontent.com",
+              "client_id": "326672687124-cg23k50v1hj2bm7qqfgt35ft7kas8dqc.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

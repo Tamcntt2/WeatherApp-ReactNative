@@ -15,11 +15,18 @@ const SearchDropDown = (props) => {
         width: "100%",
         height: 320,
         marginTop: 3,
-        alignItems: "center", justifyContent: "center"
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      <ScrollView contentContainerStyle={{ flexGrow: 1, marginHorizontal: 10 }}>
-        <View style={{ flex: 1 }}>
+      <ScrollView
+        contentContainerStyle={{
+          marginHorizontal: 10,
+          backgroundColor: "red",
+          width: "100%",
+        }}
+      >
+        <View style={{ flex: 1, width: "100%" }}>
           {props.locationSearch.map((itemD) => {
             return (
               <TouchableOpacity
@@ -31,6 +38,9 @@ const SearchDropDown = (props) => {
                   props.navigation.navigate("FavoriteOverview", {
                     latitude: lat,
                     longitude: lon,
+                    isFavorite: false,
+                    handleAddDataStorage: props.handleAddDataStorage,
+                    handleDeleteDataStorage: props.handleDeleteDataStorage,
                   });
                 }}
               >
@@ -46,6 +56,7 @@ const SearchDropDown = (props) => {
 
 const styles = StyleSheet.create({
   itemDropdown: {
+    width: "100%",
     borderColor: "gray",
     borderWidth: 1,
     paddingHorizontal: 15,

@@ -20,41 +20,41 @@ import imageSearch from "../.././assets/search.png";
 
 import values from "../contains/values";
 
-const DATA = [
-  {
-    id: "0",
-    latitude: 21.028511,
-    longitude: 105.804817,
-    address: "Hà Nội",
-    icon: "10d",
-    temp: 25.01,
-    humidity: 88,
-    wind_speed: 1.65,
-    isFavorite: true,
-  },
-  {
-    id: "1",
-    latitude: 35.652832,
-    longitude: 139.839478,
-    address: "Tokyo",
-    icon: "10d",
-    temp: 25.01,
-    humidity: 88,
-    wind_speed: 1.65,
-    isFavorite: true,
-  },
-  {
-    id: "2",
-    latitude: 40.73061,
-    longitude: -73.935242,
-    address: "New York",
-    icon: "10d",
-    temp: 25.01,
-    humidity: 88,
-    wind_speed: 1.65,
-    isFavorite: true,
-  },
-];
+// const DATA = [
+//   {
+//     id: "0",
+//     latitude: 21.028511,
+//     longitude: 105.804817,
+//     address: "Hà Nội1",
+//     icon: "10d",
+//     temp: 25.01,
+//     humidity: 88,
+//     wind_speed: 1.65,
+//     isFavorite: true,
+//   },
+//   {
+//     id: "1",
+//     latitude: 35.652832,
+//     longitude: 139.839478,
+//     address: "Tokyo",
+//     icon: "10d",
+//     temp: 25.01,
+//     humidity: 88,
+//     wind_speed: 1.65,
+//     isFavorite: true,
+//   },
+//   {
+//     id: "2",
+//     latitude: 40.73061,
+//     longitude: -73.935242,
+//     address: "New York",
+//     icon: "10d",
+//     temp: 25.01,
+//     humidity: 88,
+//     wind_speed: 1.65,
+//     isFavorite: true,
+//   },
+// ];
 
 const ItemFavorite = ({
   address,
@@ -80,7 +80,7 @@ const ItemFavorite = ({
           <Image
             style={{
               width: 53,
-              height: 10,
+              height: 50,
               flex: 1,
               marginRight: 7,
             }}
@@ -116,43 +116,15 @@ const axios = require("axios").default;
 
 function Favorite({ navigation }) {
   function renderItemFavorite({ item }) {
-    // const [forecast, setForecast] = useState(null);
-    // const [address, setAddress] = useState(null);
     const pressHandler = ({}) => {
       navigation.navigate("FavoriteOverview", {
         latitude: item.latitude,
         longitude: item.longitude,
-        navigation: navigation,
+        isFavorite: item.isFavorite,
+        handleDeleteDataStorage: handleDeleteDataStorage,
+        handleAddDataStorage: handleAddDataStorage,
       });
     };
-
-    // useEffect(() => {
-    //   // getAddress();
-    // });
-
-    // async function getAddress() {
-    //   axios
-    //     .get(
-    //       "https://api.openweathermap.org/data/3.0/onecall?exclude=minutely&units=metric",
-    //       {
-    //         params: {
-    //           appid: values.key_API,
-    //           lat: item.latitude,
-    //           lon: item.longitude,
-    //         },
-    //       }
-    //     )
-    //     .then((response) => {
-    //       setForecast(response.data);
-    //     })
-    //     .catch((error) => console.log("Error::: ", error));
-    //   let location = {
-    //     latitude: item.latitude,
-    //     longitude: item.longitude,
-    //   };
-    //   let address = await Location.reverseGeocodeAsync(location);
-    //   setAddress(address);
-    // }
 
     return (
       <ItemFavorite
@@ -161,11 +133,6 @@ function Favorite({ navigation }) {
         temp={item.temp.toFixed()}
         humidity={item.humidity}
         wind_speed={item.wind_speed}
-        // address={address[0].region}
-        // icon={forecast.current.weather[0].icon}
-        // temp={forecast.current.temp}
-        // humidity={forecast.current.humidity}
-        // wind_speed={forecast.current.wind_speed}
         onPress={pressHandler}
       />
     );
@@ -174,11 +141,10 @@ function Favorite({ navigation }) {
   const [locationSearch, setLocationSearch] = useState(null); // array object location
   const [searching, setSearching] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [ready, setReady] = useState(false);
 
-  const [dataListFavorite, setDataListFavorite] = useState(DATA);
+  const [dataListFavorite, setDataListFavorite] = useState(null);
 
-  const loadData = () => {
+  const loadDataStorage = () => {
     AsyncStorage.getItem("storedData")
       .then((data) => {
         if (data !== null) {
@@ -187,29 +153,60 @@ function Favorite({ navigation }) {
         }
       })
       .catch((error) => console.error(error));
+
+    loadForecastFavorite();
   };
 
   useEffect(() => {
-    loadFavorite();
-    loadData();
-    // navigation: search bar header
-    // navigation.setOptions({
-    //   headerSearchBarOptions: {
-    //     placeholder: "Tìm kiếm",
-    //     onChangeText: (event) => {
-    //       const text = event.nativeEvent.text.trim();
-    //       if (text) {
-    //         setSearching(true);
-    //         searchFilterFunction(text);
-    //       } else {
-    //         setSearching(false);
-    //       }
-    //     },
-    //   },
-    // });
+    // handleClearDataStorage();
+    loadDataStorage();
   }, []);
 
-  const loadFavorite = async function () {
+  const handleDeleteDataStorage = (latitude, longitude) => {
+    const newData = [...dataListFavorite];
+    const itemIndex = dataListFavorite.findIndex(
+      (item) => item.latitude == latitude && item.longitude == longitude
+    );
+    newData.splice(itemIndex, 1);
+
+    AsyncStorage.setItem("storedData", JSON.stringify(newData))
+      .then(() => {
+        setDataListFavorite(newData);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handleAddDataStorage = (itemData) => {
+    let check = true;
+    dataListFavorite.forEach((item) => {
+      if (!item.address.localeCompare(itemData.address)) {
+        check = false;
+        return;
+      }
+    });
+
+    if (check) {
+      const newData = [...dataListFavorite, itemData];
+      AsyncStorage.setItem("storedData", JSON.stringify(newData))
+        .then(() => {
+          setDataListFavorite(newData);
+        })
+        .catch((error) => console.log(error));
+    }
+
+    // navigation.getParent()?.goBack();
+  };
+
+  const handleClearDataStorage = () => {
+    setDataListFavorite([]);
+    AsyncStorage.setItem("storedData", JSON.stringify([]))
+      .then(() => {
+        setDataListFavorite([]);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const loadForecastFavorite = async function () {
     for (let i = 0; i < dataListFavorite.length; i++) {
       console.log("Loading favorite:::", i);
 
@@ -248,7 +245,7 @@ function Favorite({ navigation }) {
         params: {
           country: "VN",
           city: text,
-          addressdetail: 1
+          addressdetail: 1,
         },
       })
       .then(async (response) => {
@@ -261,32 +258,16 @@ function Favorite({ navigation }) {
       .catch((error) => console.log("Error::: ", error));
   };
 
-  if (!dataListFavorite.length) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <Text>Vui lòng thêm thành phố yêu thích!</Text>
-      </SafeAreaView>
-    );
+  if (!loading) {
+    console.log("Loading favorite fail!");
+    // return (
+    //   <SafeAreaView
+    //     style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+    //   >
+    //     <ActivityIndicator size="large" />
+    //   </SafeAreaView>
+    // );
   }
-
-  // if (!ready) {
-  //   return (
-  //     <SafeAreaView style={styles.container}>
-  //       <Text>Loading...!</Text>
-  //     </SafeAreaView>
-  //   );
-  // }
-
-  // if (!loading) {
-  //   console.log("Loading favorite fail!");
-  //   return (
-  //     <SafeAreaView
-  //       style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-  //     >
-  //       <ActivityIndicator size="large" />
-  //     </SafeAreaView>
-  //   );
-  // }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -330,7 +311,18 @@ function Favorite({ navigation }) {
             }}
           />
         </View>
-        {!searching && (
+
+        {!searching && (!dataListFavorite || dataListFavorite.length === 0) && (
+          <SafeAreaView
+            style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
+          >
+            <Text style={{ fontSize: "15" }}>
+              Vui lòng thêm thành phố yêu thích!
+            </Text>
+          </SafeAreaView>
+        )}
+
+        {!searching && dataListFavorite && (
           <FlatList
             numColumns={2}
             data={dataListFavorite}
@@ -343,6 +335,8 @@ function Favorite({ navigation }) {
           <SearchDropDown
             navigation={navigation}
             locationSearch={locationSearch}
+            handleAddDataStorage={handleAddDataStorage}
+            handleDeleteDataStorage={handleDeleteDataStorage}
           />
         )}
       </View>
@@ -375,11 +369,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // backgroundColor: "gray",
     justifyContent: "center",
+    // backgroundColor: 'gray',
+    width: 100,
   },
   itemFavoriteRight: {
     marginLeft: 10,
-    alignItems: "left",
-    justifyContent: "left",
+    alignItems: "center",
+    justifyContent: "center",
     marginRight: 5,
   },
   textCity: {

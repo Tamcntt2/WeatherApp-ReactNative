@@ -63,7 +63,10 @@ function ForecastComponent(props) {
     .then((response) => {
       const data = response.data;
       const address= data.address;
-      const city = address.city.replace('Thành phố', '');
+      const city = address.city.replace('Thành phố ', '');
+      // if(city.localeCompare("Thành phố Hồ Chí Minh") !== 0) {
+      //   city = city.replace('Thành phố', '');
+      // }
     
       console.log("FC: Address ::: ", data , address, city);
       setAddress(city);
@@ -213,6 +216,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
+    marginTop: 20,
   },
   top: {
     paddingTop: 20,

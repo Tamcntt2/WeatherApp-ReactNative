@@ -10,7 +10,7 @@ function ItemDaily(props) {
       <View style={{ flex: 1 }}>
         <Image
           style={{
-            width: 40,
+            width: 60,
             height: 40,
             flex: 1,
           }}

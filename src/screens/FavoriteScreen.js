@@ -22,17 +22,17 @@ const FavoriteScreen = () => {
         <Stack.Screen
           name="FavoriteOverview"
           component={FavoriteOverviewScreen}
-          options={{
-            title: "",
-            headerBackVisible: true,
-            headerRight: () => (
-              <View>
-                <TouchableOpacity>
-                  <Ionic name="heart" size={25} color="red" />
-                </TouchableOpacity>
-              </View>
-            ),
-          }}
+          // options={{
+          //   title: "",
+          //   headerBackVisible: true,
+          //   headerRight: () => (
+          //     <View>
+          //       <TouchableOpacity>
+          //         <Ionic name="heart" size={25} color="red" />
+          //       </TouchableOpacity>
+          //     </View>
+          //   ),
+          // }}
         />
       </Stack.Navigator>
     </>
