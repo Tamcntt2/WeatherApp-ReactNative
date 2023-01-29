@@ -1,5 +1,5 @@
 # WeatherApp
-![alt text](image/weather.png "weather")
+![alt text](weather.png "weather")
 
 Sử dụng React Native phát triển một ứng dụng thời tiết với yêu cầu như sau: 
 
