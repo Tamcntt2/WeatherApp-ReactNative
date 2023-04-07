@@ -1,9 +1,6 @@
 # WeatherApp
 ![alt text](home-page.png "weather")
-
 ![alt text](favourite-page.png "weather")
-
-![alt text](search-dropdown.png "weather")
 
 Sử dụng React Native phát triển một ứng dụng thời tiết với yêu cầu như sau: 
 
