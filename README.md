@@ -1,4 +1,12 @@
 # WeatherApp
+
+•	Nội dung:
+-	Hiển thị các thông tin về dự báo thời tiết ở thời điểm hiện tại và các ngày giờ tiếp theo.
+-	Hỗ trợ người dùng tìm kiếm vị trí khác nhau, thêm vào danh sách các thành phố yêu thích.
+-	Hiển thị bản đồ thời tiết các thành phố yêu thích và các khu vực lân cận.
+-	Nhận các thông báo khi có sự kiện về bão lũ, ngập lụt, động đất.
+
+
 ![alt text](home-page.png "weather")
 
 Sử dụng React Native phát triển một ứng dụng thời tiết với yêu cầu như sau: 
