@@ -1,6 +1,5 @@
 # WeatherApp
 ![alt text](home-page.png "weather")
-![alt text](favourite-page.png "weather")
 
 Sử dụng React Native phát triển một ứng dụng thời tiết với yêu cầu như sau: 
 
@@ -176,6 +175,9 @@ Sử dụng React Native phát triển một ứng dụng thời tiết với y�
   - Cho phép người dùng tìm kiếm thành phố và có thể thêm thành phố đó vào mục yêu thích.
 
   - Hiển thị tình trạng thời tiết hiện tại của các thành phố yêu thích.
+  
+  ![alt text](favourite-page.png "weather")
+  ![alt text](search-dropdown.png "weather")
 
 3. Sử dụng firebase push notification thông báo khi có sự kiện về bão lũ, ngập lụt. Khi người dùng click thông báo sẽ hiển thị ra 1 bài báo nói về tin tức đó. 
 
