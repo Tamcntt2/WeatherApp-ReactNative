@@ -22,7 +22,7 @@ Sử dụng React Native phát triển một ứng dụng thời tiết với y�
 
   ```
 
-  * Mô tả API
+  * Mô tả API OpenWeatherMap
 
   | Parameter | Mô tả |
   | --- | ----------- |
@@ -178,14 +178,20 @@ Sử dụng React Native phát triển một ứng dụng thời tiết với y�
 
 2. Thời tiết các thành phố yêu thích:
   
-  - Cho phép người dùng tìm kiếm thành phố và có thể thêm thành phố đó vào mục yêu thích.
+  - Cho phép người dùng tìm kiếm thành phố và có thể thêm thành phố đó vào mục yêu thích, lưu trữ dữ liệu trên storage.
+  
+  - Sử dụng API Nominatim lấy dữ liệu location thành phố tìm kiếm.
 
   - Hiển thị tình trạng thời tiết hiện tại của các thành phố yêu thích.
   
   ![alt text](favourite-page.png "weather")
   ![alt text](search-dropdown.png "weather")
 
-3. Sử dụng firebase push notification thông báo khi có sự kiện về bão lũ, ngập lụt. Khi người dùng click thông báo sẽ hiển thị ra 1 bài báo nói về tin tức đó. 
+3. Hiển thị map thời tiết các thành phố yêu thích:
+
+- Sử dụng Google Map API, location lấy từ Nominatim, nhiệt độ lấy từ Open Weather App để hiển thị bản đồ thời tiết các thành phố yêu thích.
+
+4. Sử dụng firebase push notification thông báo khi có sự kiện về bão lũ, ngập lụt. Khi người dùng click thông báo sẽ hiển thị ra 1 bài báo nói về tin tức đó. 
 
 - Ví dụ: Chuẩn bị có siêu Maon. Push 1 notification thông báo về bão Maon. Khi click vào notification hiển thị bài báo về siêu bão Maon (https://vnexpress.net/bao-maon-gay-mua-to-tu-chieu-nay-4503611.html) trên App.
 
