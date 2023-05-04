@@ -43,135 +43,134 @@ Sử dụng React Native phát triển một ứng dụng thời tiết với y�
 
   ```json
   {
-    "lat": 21.0309,
-    "lon": 105.7817,
-    "timezone": "Asia/Bangkok",
-    "timezone_offset": 25200,
-    "current": {
-        "dt": 1663906816,
-        "sunrise": 1663886747,
-        "sunset": 1663930386,
-        "temp": 305.2,
-        "feels_like": 310.34,
-        "pressure": 1011,
-        "humidity": 60,
-        "dew_point": 296.46,
-        "uvi": 9.41,
-        "clouds": 27,
-        "visibility": 10000,
-        "wind_speed": 3.03,
-        "wind_deg": 12,
-        "wind_gust": 3.83,
-        "weather": [
-            {
-                "id": 802,
-                "main": "Clouds",
-                "description": "scattered clouds",
-                "icon": "03d"
-            }
-        ]
-    },
-    "minutely": [
-        {
-            "dt": 1663906860,
-            "precipitation": 0
-        },
-        {
-            "dt": 1663906920,
-            "precipitation": 0
-        },
-    ],
-    "hourly": [
-        {
-            "dt": 1663905600,
-            "temp": 305.2,
-            "feels_like": 310.34,
-            "pressure": 1011,
-            "humidity": 60,
-            "dew_point": 296.46,
-            "uvi": 9.41,
-            "clouds": 27,
-            "visibility": 10000,
-            "wind_speed": 3.03,
-            "wind_deg": 12,
-            "wind_gust": 3.83,
-            "weather": [
-                {
-                    "id": 802,
-                    "main": "Clouds",
-                    "description": "scattered clouds",
-                    "icon": "03d"
-                }
-            ],
-            "pop": 0.33
-        },
-        {
-            "dt": 1663909200,
-            "temp": 304.92,
-            "feels_like": 309.41,
-            "pressure": 1011,
-            "humidity": 59,
-            "dew_point": 295.92,
-            "uvi": 10.23,
-            "clouds": 30,
-            "visibility": 10000,
-            "wind_speed": 2.68,
-            "wind_deg": 26,
-            "wind_gust": 3.57,
-            "weather": [
-                {
-                    "id": 802,
-                    "main": "Clouds",
-                    "description": "scattered clouds",
-                    "icon": "03d"
-                }
-            ],
-            "pop": 0.37
-        },
-        
-    ],
-    "daily": [
-        {
-            "dt": 1663905600,
-            "sunrise": 1663886747,
-            "sunset": 1663930386,
-            "moonrise": 1663877640,
-            "moonset": 1663925460,
-            "moon_phase": 0.91,
-            "temp": {
-                "day": 305.2,
-                "min": 296.33,
-                "max": 305.31,
-                "night": 297.74,
-                "eve": 300.9,
-                "morn": 296.47
-            },
-            "feels_like": {
-                "day": 310.34,
-                "night": 298.45,
-                "eve": 303.71,
-                "morn": 297.26
-            },
-            "pressure": 1011,
-            "humidity": 60,
-            "dew_point": 296.46,
-            "wind_speed": 4.3,
-            "wind_deg": 165,
-            "wind_gust": 6.87,
-            "weather": [
-                {
-                    "id": 500,
-                    "main": "Rain",
-                    "description": "light rain",
-                    "icon": "10d"
-                }
-            ],
-            "clouds": 27,
-            "pop": 0.77,
-            "rain": 2.03,
-            "uvi": 10.23
-        }
+  "lat": 21.0309,
+  "lon": 105.7817,
+  "timezone": "Asia/Bangkok",
+  "timezone_offset": 25200,
+  "current": {
+    "dt": 1663906816,
+    "sunrise": 1663886747,
+    "sunset": 1663930386,
+    "temp": 305.2,
+    "feels_like": 310.34,
+    "pressure": 1011,
+    "humidity": 60,
+    "dew_point": 296.46,
+    "uvi": 9.41,
+    "clouds": 27,
+    "visibility": 10000,
+    "wind_speed": 3.03,
+    "wind_deg": 12,
+    "wind_gust": 3.83,
+    "weather": [
+      {
+        "id": 802,
+        "main": "Clouds",
+        "description": "scattered clouds",
+        "icon": "03d"
+      }
     ]
+  },
+  "minutely": [
+    {
+      "dt": 1663906860,
+      "precipitation": 0
+    },
+    {
+      "dt": 1663906920,
+      "precipitation": 0
+    }
+  ],
+  "hourly": [
+    {
+      "dt": 1663905600,
+      "temp": 305.2,
+      "feels_like": 310.34,
+      "pressure": 1011,
+      "humidity": 60,
+      "dew_point": 296.46,
+      "uvi": 9.41,
+      "clouds": 27,
+      "visibility": 10000,
+      "wind_speed": 3.03,
+      "wind_deg": 12,
+      "wind_gust": 3.83,
+      "weather": [
+        {
+          "id": 802,
+          "main": "Clouds",
+          "description": "scattered clouds",
+          "icon": "03d"
+        }
+      ],
+      "pop": 0.33
+    },
+    {
+      "dt": 1663909200,
+      "temp": 304.92,
+      "feels_like": 309.41,
+      "pressure": 1011,
+      "humidity": 59,
+      "dew_point": 295.92,
+      "uvi": 10.23,
+      "clouds": 30,
+      "visibility": 10000,
+      "wind_speed": 2.68,
+      "wind_deg": 26,
+      "wind_gust": 3.57,
+      "weather": [
+        {
+          "id": 802,
+          "main": "Clouds",
+          "description": "scattered clouds",
+          "icon": "03d"
+        }
+      ],
+      "pop": 0.37
+    }
+  ],
+  "daily": [
+    {
+      "dt": 1663905600,
+      "sunrise": 1663886747,
+      "sunset": 1663930386,
+      "moonrise": 1663877640,
+      "moonset": 1663925460,
+      "moon_phase": 0.91,
+      "temp": {
+        "day": 305.2,
+        "min": 296.33,
+        "max": 305.31,
+        "night": 297.74,
+        "eve": 300.9,
+        "morn": 296.47
+      },
+      "feels_like": {
+        "day": 310.34,
+        "night": 298.45,
+        "eve": 303.71,
+        "morn": 297.26
+      },
+      "pressure": 1011,
+      "humidity": 60,
+      "dew_point": 296.46,
+      "wind_speed": 4.3,
+      "wind_deg": 165,
+      "wind_gust": 6.87,
+      "weather": [
+        {
+          "id": 500,
+          "main": "Rain",
+          "description": "light rain",
+          "icon": "10d"
+        }
+      ],
+      "clouds": 27,
+      "pop": 0.77,
+      "rain": 2.03,
+      "uvi": 10.23
+    }
+  ]
 }
   ```
 
